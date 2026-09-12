@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python — Искусство Простоты</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #0B0F19;
+            --bg-card: rgba(20, 27, 45, 0.6);
+            --border-card: rgba(255, 255, 255, 0.08);
+            --accent-blue: #38BDF8;
+            --accent-yellow: #FACC15;
+            --accent-green: #34D399;
+            --accent-purple: #C084FC;
+            --text-primary: #F3F4F6;
+            --text-secondary: #9CA3AF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(250, 204, 21, 0.08) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-card);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 15, 25, 0.7);
+        }
+
+        .logo {
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--accent-yellow);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 1rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, #9CA3AF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 99px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            font-family: 'Fira Code', monospace;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Content Grid */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Card Component */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-blue), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #FFF;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Code Window Block */
+        .code-block {
+            background: #07090E;
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+
+        /* Syntax Highlighting */
+        .kw { color: var(--accent-purple); }
+        .fn { color: var(--accent-blue); }
+        .str { color: var(--accent-green); }
+        .num { color: var(--accent-yellow); }
+        .cm { color: #6B7280; font-style: italic; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid var(--border-card);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <span>&gt;&gt;&gt;</span> Puthon
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-badge">Самый частый язык программирования</div>
+            <h1>Простота. Мощь. Элегантность.</h1>
+            <p>Python — это язык программирования, способ дать компьютеру точные, повторяемые инструкции. Он доминирует в науке о данных и искусственном интеллекте по двум причинам: читается почти как английский, и огромное сообщество создало на этом основе бесплатные инструменты — для таблиц данных, для графиков, для машинного обучения. Когда исследователи анализируют данные опросов, когда больница строит модель риска, когда обучается современная система искусственного интеллекта — Python почти наверняка участвовал..</p>
+        </section>
+
+        <section class="container">
+            <h2 class="section-title">Фундамент языка</h2>
+            
+            <div class="grid">
+                <!-- Card 1: Variables -->
+                <div class="card">
+                    <div class="card-icon" style="background: rgba(56, 189, 248, 0.1); color: var(--accent-blue);">01</div>
+                    <h3>Блокнот Jupyter</h3>
+                    <p>Текстовые ячейки — заметки и объяснения.
+                    Кодовые ячейки — настоящий Python, который можно запускать..</p>
+                    <div class="code-block">
+                        <span class="cm"># Всё есть объект</span><br>
+                        name = <span class="str">"Python"</span><br>
+                        version = <span class="num">3.12</span><br>
+                        is_awesome = <span class="kw">True</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Control Flow -->
+                <div class="card">
+                    <div class="card-icon" style="background: rgba(250, 204, 21, 0.1); color: var(--accent-yellow);">02</div>
+                    <h3>Переменные — маркированные поля для ваших данных</h3>
+                    <p>Прежде чем компьютер сможет работать с определённым значением, ему нужно где-то её хранить. Переменная — это имя, прикреплённое к значению — представьте её как маркированную коробку:.</p>
+                  </div>
+
+                <!-- Card 3: Data Structures -->
+                <div class="card">
+                    <div class="card-icon" style="background: rgba(52, 211, 153, 0.1); color: var(--accent-green);">03</div>
+                    <h3>Структуры данных</h3>
+                    <p>Встроенные списки, словари и множества оптимизированы для эффективной работы из коробки.</p>
+                    <div class="code-block">
+                        <span class="cm"># Словари (Key-Value)</span><br>
+                        stack = {<br>
+                        &nbsp;&nbsp;<span class="str">"web"</span>: <span class="str">"Django"</span>,<br>
+                        &nbsp;&nbsp;<span class="str">"ai"</span>: <span class="str">"PyTorch"</span><br>
+                        }
+                    </div>
+                </div>
+
+                <!-- Card 4: Functions -->
+                <div class="card">
+                    <div class="card-icon" style="background: rgba(192, 132, 252, 0.1); color: var(--accent-purple);">04</div>
+                    <h3>Функции</h3>
+                    <p>Первоклассные объекты: передавайте функции как аргументы, возвращайте их и создавайте лямбды.</p>
+                    <div class="code-block">
+                        <span class="kw">def</span> <span class="fn">greet</span>(user: <span class="fn">str</span>) -&gt; <span class="fn">str</span>:<br>
+                        &nbsp;&nbsp;<span class="kw">return</span> <span class="str">f"Привет, {user}!"</span><br><br>
+                        square = <span class="kw">lambda</span> x: x ** <span class="num">2</span>
+                    </div>
+                </div>
+
+                <!-- Card 5: OOP -->
+                <div class="card">
+                    <div class="card-icon" style="background: rgba(56, 189, 248, 0.1); color: var(--accent-blue);">05</div>
+                    <h3>ООП и Классы</h3>
+                    <p>Элегантное объектно-ориентированное программирование с магическими методами и наследованием.</p>
+                    <div class="code-block">
+                        <span class="kw">class</span> <span class="fn">Developer</span>:<br>
+                        &nbsp;&nbsp;<span class="kw">def</span> <span class="fn">__init__</span>(self, lang):<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;self.lang = lang<br><br>
+                        dev = Developer(<span class="str">"Python"</span>)
+                    </div>
+                </div>
+
+                <!-- Card 6: Modules -->
+                <div class="card">
+                    <div class="card-icon" style="background: rgba(250, 204, 21, 0.1); color: var(--accent-yellow);">06</div>
+                    <h3>Экосистема PyPI</h3>
+                    <p>Тысячи готовых библиотек для машинного обучения, веб-разработки и автоматизации.</p>
+                    <div class="code-block">
+                        <span class="kw">import</span> asyncio<br>
+                        <span class="kw">import</span> math<br><br>
+                        <span class="cm"># "Batteries Included"</span><br>
+                        print(math.pi)
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Создано с эстетикой в каждом пикселе. Python 2026</p>
+    </footer>
+
+</body>
+</html>
